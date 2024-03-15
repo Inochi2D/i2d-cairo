@@ -9,50 +9,41 @@ enum CairoSupport {
     cairo12
 }
 
-private
-{
+private {
     SharedLib lib;
     CairoSupport loadedVersion;
 }
 
-CairoSupport loadedCairoVersion()
-{
+CairoSupport loadedCairoVersion() {
     return loadedVersion;
 }
 
-bool isCairoLoaded()
-{
+bool isCairoLoaded() {
     return lib != invalidHandle;
 }
 
-CairoSupport loadCairo()
-{
-    version(Windows)
-    {
+CairoSupport loadCairo() {
+    version (Windows) {
         const(char)[][1] libNames =
-        [
-            "cairo.dll"
-        ];
-    }
-    else version(OSX)
-    {
+            [
+                "cairo.dll"
+            ];
+    } else version (OSX) {
         const(char)[][1] libNames =
-        [
-            "libcairo.dylib"
-        ];
-    }
-    else version(Posix)
-    {
+            [
+                "libcairo.dylib"
+            ];
+    } else version (Posix) {
         const(char)[][2] libNames =
-        [
-            "libcairo.so",
-            "/usr/local/lib/libcairo.so",
-        ];
-    }
-    else static assert(0, "libcairo is not yet supported on this platform.");
-    
+            [
+                "libcairo.so",
+                "/usr/local/lib/libcairo.so",
+            ];
+    } else
+        static assert(0, "libcairo is not yet supported on this platform.");
+
     CairoSupport ret;
-    foreach(name; libNames) {
+    foreach (name; libNames) {
         ret = loadCairo(name.ptr);
         if (ret != CairoSupport.noLibrary)
             break;
@@ -62,7 +53,7 @@ CairoSupport loadCairo()
 
 CairoSupport loadCairo(const(char)* libName) {
     lib = load(libName);
-    if(lib == invalidHandle) {
+    if (lib == invalidHandle) {
         return CairoSupport.noLibrary;
     }
 
@@ -71,11 +62,12 @@ CairoSupport loadCairo(const(char)* libName) {
 
     import funcs = cairo.funcs;
 
-    import std.algorithm.searching: startsWith;
-    static foreach(m; __traits(allMembers, cairo.funcs)) {
+    import std.algorithm.searching : startsWith;
+
+    static foreach (m; __traits(allMembers, cairo.funcs)) {
         static if (m.startsWith("cairo_")) {
             lib.bindSymbol(
-                cast(void**)&__traits(getMember, cairo.funcs, m), 
+                cast(void**)&__traits(getMember, cairo.funcs, m),
                 __traits(getMember, cairo.funcs, m).stringof
             );
             loaded++;
@@ -85,7 +77,19 @@ CairoSupport loadCairo(const(char)* libName) {
     loaded -= errorCount();
     if (loaded > 0)
         return CairoSupport.badLibrary;
-    
+
     loadedVersion = CairoSupport.cairo12;
     return loadedVersion;
+}
+
+void unloadCairo() {
+    unload(lib);
+    lib = invalidHandle;
+    
+    import std.algorithm.searching : startsWith;
+    static foreach (m; __traits(allMembers, cairo.funcs)) {
+        static if (m.startsWith("cairo_")) {
+            __traits(getMember, cairo.funcs, m) = null;
+        }
+    }
 }

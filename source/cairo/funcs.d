@@ -243,7 +243,7 @@ __gshared {
     font object inside the the cairo_t. */
 
     void function(cairo_t* cr,
-        const char* family,
+        const(char)* family,
         cairo_font_slant_t slant,
         cairo_font_weight_t weight) cairo_select_font_face;
 
@@ -270,12 +270,12 @@ __gshared {
 
     cairo_scaled_font_t* function(cairo_t* cr) cairo_get_scaled_font;
 
-    void function(cairo_t* cr, const char* utf8) cairo_show_text;
+    void function(cairo_t* cr, const(char)* utf8) cairo_show_text;
 
     void function(cairo_t* cr, const cairo_glyph_t* glyphs, int num_glyphs) cairo_show_glyphs;
 
     void function(cairo_t* cr,
-        const char* utf8,
+        const(char)* utf8,
         int utf8_len,
         const cairo_glyph_t* glyphs,
         int num_glyphs,
@@ -283,12 +283,12 @@ __gshared {
         int num_clusters,
         cairo_text_cluster_flags_t cluster_flags) cairo_show_text_glyphs;
 
-    void function(cairo_t* cr, const char* utf8) cairo_text_path;
+    void function(cairo_t* cr, const(char)* utf8) cairo_text_path;
 
     void function(cairo_t* cr, const cairo_glyph_t* glyphs, int num_glyphs) cairo_glyph_path;
 
     void function(cairo_t* cr,
-        const char* utf8,
+        const(char)* utf8,
         cairo_text_extents_t* extents) cairo_text_extents;
 
     void function(cairo_t* cr,
@@ -348,7 +348,7 @@ __gshared {
         cairo_font_extents_t* extents) cairo_scaled_font_extents;
 
     void function(cairo_scaled_font_t* scaled_font,
-        const char* utf8,
+        const(char)* utf8,
         cairo_text_extents_t* extents) cairo_scaled_font_text_extents;
 
     void function(cairo_scaled_font_t* scaled_font,
@@ -359,7 +359,7 @@ __gshared {
     cairo_status_t function(cairo_scaled_font_t* scaled_font,
         double x,
         double y,
-        const char* utf8,
+        const(char)* utf8,
         int utf8_len,
         cairo_glyph_t** glyphs,
         int* num_glyphs,
@@ -383,11 +383,11 @@ __gshared {
 
     /* Toy fonts */
 
-    cairo_font_face_t* function(const char* family,
+    cairo_font_face_t* function(const(char)* family,
         cairo_font_slant_t slant,
         cairo_font_weight_t weight) cairo_toy_font_face_create;
 
-    const char* function(cairo_font_face_t* font_face) cairo_toy_font_face_get_family;
+    const(char)* function(cairo_font_face_t* font_face) cairo_toy_font_face_get_family;
 
     cairo_font_slant_t function(cairo_font_face_t* font_face) cairo_toy_font_face_get_slant;
 
@@ -468,7 +468,7 @@ __gshared {
 
     cairo_status_t function(cairo_t* cr) cairo_status;
 
-    const char* function(cairo_status_t status) cairo_status_to_string;
+    const(char)* function(cairo_status_t status) cairo_status_to_string;
 
     /* Backend device manipulation */
 
@@ -591,7 +591,7 @@ __gshared {
     cairo_content_t function(cairo_surface_t* surface) cairo_surface_get_content;
 
     cairo_status_t function(cairo_surface_t* surface,
-        const char* filename) cairo_surface_write_to_png;
+        const(char)* filename) cairo_surface_write_to_png;
 
     cairo_status_t function(cairo_surface_t* surface,
         cairo_write_func_t write_func,
@@ -606,12 +606,12 @@ __gshared {
         cairo_destroy_func_t destroy) cairo_surface_set_user_data;
 
     void function(cairo_surface_t* surface,
-        const char* mime_type,
+        const(char)* mime_type,
         const ubyte** data,
         ulong* length) cairo_surface_get_mime_data;
 
     cairo_status_t function(cairo_surface_t* surface,
-        const char* mime_type,
+        const(char)* mime_type,
         const ubyte* data,
         ulong length,
         cairo_destroy_func_t destroy,
@@ -688,7 +688,7 @@ __gshared {
 
     int function(cairo_surface_t* surface) cairo_image_surface_get_stride;
 
-    cairo_surface_t* function(const char* filename) cairo_image_surface_create_from_png;
+    cairo_surface_t* function(const(char)* filename) cairo_image_surface_create_from_png;
 
     cairo_surface_t* function(cairo_read_func_t read_func, void* closure) cairo_image_surface_create_from_png_stream;
 
