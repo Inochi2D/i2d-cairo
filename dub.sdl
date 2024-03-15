@@ -1,0 +1,6 @@
+name "i2d-cairo"
+description "BetterC binding to the Cairo vector graphics library"
+authors "Luna"
+copyright "Copyright © 2024, Luna"
+license "MPL"
+dependency "bindbc-loader" version="~>1.1.5"
