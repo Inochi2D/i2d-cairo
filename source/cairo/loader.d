@@ -75,7 +75,7 @@ CairoSupport loadCairo(const(char)* libName) {
     }
 
     loaded -= errorCount();
-    if (loaded > 0)
+    if (loaded <= 0)
         return CairoSupport.badLibrary;
 
     loadedVersion = CairoSupport.cairo12;
