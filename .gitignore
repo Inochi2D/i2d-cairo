@@ -16,3 +16,6 @@ i2d-cairo-test-*
 *.lst
 
 dub.selections.json
+
+out/
+.DS_Store
