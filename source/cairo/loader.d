@@ -6,7 +6,7 @@ import cairo.funcs;
 enum CairoSupport {
     noLibrary,
     badLibrary,
-    cairo12
+    cairo
 }
 
 private {
@@ -59,9 +59,6 @@ CairoSupport loadCairo(const(char)* libName) {
 
     int loaded;
     loadedVersion = CairoSupport.badLibrary;
-
-    import funcs = cairo.funcs;
-
     import std.algorithm.searching : startsWith;
 
     static foreach (m; __traits(allMembers, cairo.funcs)) {
@@ -78,7 +75,7 @@ CairoSupport loadCairo(const(char)* libName) {
     if (loaded <= 0)
         return CairoSupport.badLibrary;
 
-    loadedVersion = CairoSupport.cairo12;
+    loadedVersion = CairoSupport.cairo;
     return loadedVersion;
 }
 
