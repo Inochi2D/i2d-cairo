@@ -14,6 +14,8 @@ private {
     CairoSupport loadedVersion;
 }
 
+extern(C) @nogc nothrow:
+
 CairoSupport loadedCairoVersion() {
     return loadedVersion;
 }
