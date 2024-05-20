@@ -14,7 +14,7 @@ private {
     CairoSupport loadedVersion;
 }
 
-extern(C) @nogc nothrow:
+@nogc nothrow:
 
 CairoSupport loadedCairoVersion() {
     return loadedVersion;
